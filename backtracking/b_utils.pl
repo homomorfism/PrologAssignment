@@ -1,5 +1,5 @@
 
-:- ensure_loaded(config).
+:- ensure_loaded(b_config).
 
 % Searching for min path in ListPaths
 find_shortest_path([Head | Tail], MinPath) :-

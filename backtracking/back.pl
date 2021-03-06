@@ -1,7 +1,7 @@
 
-:- ensure_loaded(utils).
+:- ensure_loaded(b_utils).
 
-path(X, X, _, [], _) :- 
+path(X, X, _, [], _) :-
 	true.
 
 
@@ -37,7 +37,8 @@ main :-
 
 	find_shortest_path(AllPaths, MinPath),
 
-	write("\nPaths: "), write([Start | MinPath]).
+	write("\nPaths: "), write([Start | MinPath]),
+	write("\n").
 
 
 

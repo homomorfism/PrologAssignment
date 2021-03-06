@@ -1,5 +1,5 @@
 
-:- ensure_loaded(configs).
+:- ensure_loaded(d_configs).
 
 
 :- dynamic(is_safe/1).

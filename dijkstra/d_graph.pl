@@ -1,4 +1,4 @@
-:- ensure_loaded(utils).
+:- ensure_loaded(d_utils).
 
 
 

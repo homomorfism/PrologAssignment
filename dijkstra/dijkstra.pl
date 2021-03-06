@@ -1,15 +1,20 @@
-:- include(graph).
+:- include(d_graph).
 :- dynamic(rpath/2).
 :- dynamic(edge/3).
-:- ensure_loaded(configs).
+:- ensure_loaded(d_configs).
 
 
-path(From, To, Dist) :- edge(To, From, Dist).
-path(From, To, Dist) :- edge(From, To, Dist).
+path(From, To, Dist):- edge(From, To, Dist);
+                        edge(To, From, Dist).
 
 shorterPath([H|Path], Dist) :-
-    (rpath([H|_], D) -> Dist < D -> retract(rpath([H|_], _)); true),
-    assertz(rpath([H|Path], Dist)).
+    (
+        rpath([H|_], D) 
+            -> Dist < D 
+                -> retract(rpath([H|_], _)); 
+            true
+    ),
+    assertz(rpath([H|Path], Dist)). 
 
 traverse(From, Path, Dist, IsSafe) :-
     path(From, T, D),

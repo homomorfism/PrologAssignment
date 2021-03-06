@@ -7,4 +7,4 @@ covid2([1,5]).
 
 
 mask_position([4,3]).
-doctor_position([1,2]).
+doctor_position([7,7]).
