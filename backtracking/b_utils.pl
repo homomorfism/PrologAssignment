@@ -37,9 +37,26 @@ is_valid(Point) :-
 	Y >= 1, Y =< Size. 
 
 
-get_neighboor(Point, Neighboor) :-
+get_neighboor(Point, Neighboor, Step) :-
 	Point = [X, Y],
-	member([XStep, YStep], [[1,0],[1,1],[0,1],[1,-1],[0,-1],[-1,-1],[-1,0],[-1,1]]),
+	
+	(
+		Step = 1 ->
+			member([XStep, YStep], [
+				[1,0],[1,1],[0,1],[1,-1],
+				[0,-1],[-1,-1],[-1,0],[-1,1]
+			]);
+
+		Step = 2 ->
+			member([XStep, YStep], [
+				[-2,-2], [-2,-1], [-2, 0], [-2, 1], [-2, 2],
+				[-1, 2], [ 0, 2], [ 1, 2], [ 2, 2],
+				[ 2, 1], [ 2, 0], [ 2,-1], [ 2,-2],
+				[ 1,-2], [ 0,-2], [-1,-2]
+			])
+	),
+
+
 
 	NewX is X + XStep,
 	NewY is Y + YStep,
@@ -53,11 +70,12 @@ get_neighboor(Point, Neighboor) :-
 is_infected(Position, Resistent) :-
 	covid1(Covid1),
 	covid2(Covid2),
+	zone(Step),
 
 	(
 		Resistent -> false;
-		get_neighboor(Covid1, Position) -> true;
-		get_neighboor(Covid2, Position) -> true;
+		get_neighboor(Covid1, Position, Step) -> true;
+		get_neighboor(Covid2, Position, Step) -> true;
 		false
 	).
 
@@ -80,7 +98,11 @@ dist(Point1, Point2, Distance) :-
 	Point1 = [X1, Y1],
 	Point2 = [X2, Y2],
 
-	Distance = max(X1 - X2, Y1 - Y2).
+	N is abs(X1 - X2),
+	K is abs(Y1 - Y2),
+
+	Distance is max(N, K).
+
 
 
 

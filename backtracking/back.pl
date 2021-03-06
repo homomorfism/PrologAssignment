@@ -6,13 +6,13 @@ path(X, X, _, [], _) :-
 
 
 path(From, To, VisitedPath, Path, Resistent) :-
-	get_neighboor(From, X),
+	get_neighboor(From, X, 1),
 
 	\+ member(X, VisitedPath),
 	update_resistence(X, Resistent, NewResistent),
 	\+ is_infected(X, NewResistent),
 
-	length(VisitedPath, L), L < 12,
+	length(VisitedPath, L), L < 11,
 
 	NewVisited = [X | VisitedPath],
 
@@ -24,21 +24,29 @@ main :-
 	start(Start),
 	end(End),
 
-	bagof(
-		Path,
-		path(Start, End, [Start], Path, false),
-		AllPaths
-	),
+	(
+		bagof(
+			Path,
+			path(Start, End, [Start], Path, false),
+			AllPaths
+		) ->
 
 	
-	length(AllPaths, L),
-	write("Found paths: "), write(L),
-	%% write("\nAll paths: "), write(AllPaths),
+			length(AllPaths, L),
+			write("Found paths: "), write(L),
 
-	find_shortest_path(AllPaths, MinPath),
+			find_shortest_path(AllPaths, MinPath),
 
-	write("\nPaths: "), write([Start | MinPath]),
-	write("\n").
+			Path = [Start | MinPath],
+			length(Path, Length),
+
+			format('\nPaths: ~w, length: ~w\n', [Path, Length]);
+
+		write("No path exists!")
+
+	).
+
+
 
 
 
