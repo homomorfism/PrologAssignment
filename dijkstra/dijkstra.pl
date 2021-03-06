@@ -1,5 +1,5 @@
 :- include(d_graph).
-:- dynamic(rpath/2).
+:- dynamic(mypath/2).
 :- dynamic(edge/3).
 :- ensure_loaded(d_configs).
 
@@ -9,35 +9,35 @@ path(From, To, Dist):- edge(From, To, Dist);
 
 shorterPath([H|Path], Dist) :-
     (
-        rpath([H|_], D) 
+        mypath([H|_], D) 
             -> Dist < D 
-                -> retract(rpath([H|_], _)); 
+                -> retract(mypath([H|_], _)); 
             true
     ),
-    assertz(rpath([H|Path], Dist)). 
+    assertz(mypath([H|Path], Dist)). 
 
-traverse(From, Path, Dist, IsSafe) :-
+dijkstra(From, Path, Dist, IsSafe) :-
     path(From, T, D),
     \+ memberchk(T, Path),
     update_safe(T, IsSafe, NewIsSave),
     shorterPath([T,From|Path], Dist+D),
-    traverse(T, [From|Path], Dist+D, NewIsSave).
+    dijkstra(T, [From|Path], Dist+D, NewIsSave).
 
-traverse(From, IsSafe) :-
-    retractall(rpath(_, _)),
-    traverse(From, [], 0, IsSafe).
+dijkstra(From, IsSafe) :-
+    retractall(mypath(_, _)),
+    dijkstra(From, [], 0, IsSafe).
 
-traverse(_, _).
+dijkstra(_, _).
 
 calc(From, To, IsSafe) :-
     fill_edges,
 
-    traverse(From, IsSafe),
-    rpath([To|RPath], Dist) ->
+    dijkstra(From, IsSafe),
+    mypath([To|RPath], Dist) ->
         reverse([To|RPath], Path),
         Distance is Dist,
         format('The shortest path is ~w with distance ~w\n', [Path, Distance]);
-    format('There is no route from ~w to ~w\n', [From, To]).
+    write("Path does not exists!").
 
 
 main :-

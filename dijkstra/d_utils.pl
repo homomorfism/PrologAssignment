@@ -12,9 +12,21 @@ is_valid(Point) :-
 	Y >= 1, Y =< Size. 
 
 
-get_neighboor(Point, Neighboor) :-
+get_neighboor(Point, Neighboor, Step) :-
 	Point = [X, Y],
-	member([XStep, YStep], [[1,0],[1,1],[0,1],[1,-1],[0,-1],[-1,-1],[-1,0],[-1,1]]),
+	(
+		Step = 1 ->
+			member([XStep, YStep], [[1,0],[1,1],[0,1],[1,-1],[0,-1],[-1,-1],[-1,0],[-1,1]]);
+
+		Step = 2 ->
+			member([XStep, YStep], [
+				[-2,-2], [-2,-1], [-2, 0], [-2, 1], [-2, 2],
+				[-1, 2], [ 0, 2], [ 1, 2], [ 2, 2],
+				[ 2, 1], [ 2, 0], [ 2,-1], [ 2,-2],
+				[ 1,-2], [ 0,-2], [-1,-2]
+				])
+	),
+
 
 	NewX is X + XStep,
 	NewY is Y + YStep,
@@ -28,6 +40,7 @@ get_neighboor(Point, Neighboor) :-
 update_safe(Position, IsSave, NewIsSave) :-
 	covid1(Covid1),
 	covid2(Covid2),
+	zone(Step),
 
 
 	mask_position(Mask),
@@ -37,7 +50,7 @@ update_safe(Position, IsSave, NewIsSave) :-
 
 		(Position = Mask; Position = Doc) -> NewIsSave = true;
 
-		(get_neighboor(Position, Covid1); get_neighboor(Position, Covid2)) -> false;
+		(get_neighboor(Position, Covid1, Step); get_neighboor(Position, Covid2, Step)) -> false;
 		NewIsSave = false
 	).
 

@@ -13,6 +13,6 @@ fill_edges :-
 
 
 	forall(
-		(member(Point, ListPairs), get_neighboor(Point, Neighboor)),
+		(member(Point, ListPairs), get_neighboor(Point, Neighboor, 1)),
 		assertz(edge(Point, Neighboor, 1))
 	).
