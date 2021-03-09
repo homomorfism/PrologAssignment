@@ -1,7 +1,7 @@
 :- ensure_loaded(d_utils).
 
 
-
+%% Fills graph with edges
 fill_edges :-
 	retractall(edges(_, _, _)),
 	field(Size),

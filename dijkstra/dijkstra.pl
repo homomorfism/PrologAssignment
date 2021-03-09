@@ -4,24 +4,25 @@
 :- ensure_loaded(d_configs).
 
 
-path(From, To, Dist):- edge(From, To, Dist);
-                        edge(To, From, Dist).
-
-shorterPath([H|Path], Dist) :-
+%% retracts all long paths
+shorterPath([Node|Path], Distance) :-
     (
-        mypath([H|_], D) 
-            -> Dist < D 
-                -> retract(mypath([H|_], _)); 
+        mypath([Node|_], D) 
+            -> Distance < D 
+                -> retract(mypath([Node|_], _)); 
             true
     ),
-    assertz(mypath([H|Path], Dist)). 
+    assertz(mypath([Node|Path], Distance)). 
 
-dijkstra(From, Path, Dist, IsSafe) :-
-    path(From, T, D),
+
+
+%% Inmpemetation of dijkstra algoritm
+dijkstra(From, Path, Cost, IsSafe) :-
+    edge(From, T, D),
     \+ memberchk(T, Path),
     update_safe(T, IsSafe, NewIsSave),
-    shorterPath([T,From|Path], Dist+D),
-    dijkstra(T, [From|Path], Dist+D, NewIsSave).
+    shorterPath([T,From|Path], Cost+D),
+    dijkstra(T, [From|Path], Cost+D, NewIsSave).
 
 dijkstra(From, IsSafe) :-
     retractall(mypath(_, _)),

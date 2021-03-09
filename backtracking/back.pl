@@ -1,11 +1,13 @@
 
 :- ensure_loaded(b_utils).
 
-path(X, X, _, [], _) :-
+%% Backtracing function
+back(Home, Home, _, [], _) :-
 	true.
 
 
-path(From, To, VisitedPath, Path, Resistent) :-
+%% Backtracing function
+back(From, To, VisitedPath, Path, Resistent) :-
 	get_neighboor(From, X, 1),
 
 	\+ member(X, VisitedPath),
@@ -16,10 +18,12 @@ path(From, To, VisitedPath, Path, Resistent) :-
 
 	NewVisited = [X | VisitedPath],
 
-	path(X, To, NewVisited, LastPath, NewResistent),
+	back(X, To, NewVisited, LastPath, NewResistent),
 
 	Path = [X | LastPath].
 
+
+%% Backtracing start execution
 main :-
 	start(Start),
 	end(End),
@@ -27,7 +31,7 @@ main :-
 	(
 		bagof(
 			Path,
-			path(Start, End, [Start], Path, false),
+			back(Start, End, [Start], Path, false),
 			AllPaths
 		) ->
 
@@ -39,8 +43,9 @@ main :-
 
 			Path = [Start | MinPath],
 			length(Path, Length),
+			Length1 is Length - 1,
 
-			format('\nPaths: ~w, length: ~w\n', [Path, Length]);
+			format('\nPaths: ~w, length: ~w\n', [Path, Length1]);
 
 		write("No path exists!")
 

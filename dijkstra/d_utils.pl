@@ -4,6 +4,7 @@
 
 :- dynamic(is_safe/1).
 
+%% Chechs is vertex is in field
 is_valid(Point) :-
 	Point = [X, Y],
 	field(Size),
@@ -11,7 +12,7 @@ is_valid(Point) :-
 	X >= 1, X =< Size,
 	Y >= 1, Y =< Size. 
 
-
+%% Finds neighboor of cell
 get_neighboor(Point, Neighboor, Step) :-
 	Point = [X, Y],
 	(
@@ -37,6 +38,7 @@ get_neighboor(Point, Neighboor, Step) :-
 	Neighboor = New.
 
 
+%% Updates resistent of stepped on mask or doc field
 update_safe(Position, IsSave, NewIsSave) :-
 	covid1(Covid1),
 	covid2(Covid2),

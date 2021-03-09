@@ -19,7 +19,7 @@ find_shortest_path([Head | Tail], MinLength, CurrentMin, MinPath) :-
 
 
 
-
+%% Chechs that vertices is the same
 is_same(Position1, Position2) :-
 	Position1 = [XPosition1, YPosition1],
 	Position2 = [XPosition2, YPosition2],
@@ -28,7 +28,7 @@ is_same(Position1, Position2) :-
 	YPosition1 =:= YPosition2.
 
 
-
+%% Checking boarders of map
 is_valid(Point) :-
 	Point = [X, Y],
 	field(Size),
@@ -36,7 +36,7 @@ is_valid(Point) :-
 	X >= 1, X =< Size,
 	Y >= 1, Y =< Size. 
 
-
+%% Get neighboor of the cell
 get_neighboor(Point, Neighboor, Step) :-
 	Point = [X, Y],
 	
@@ -66,7 +66,7 @@ get_neighboor(Point, Neighboor, Step) :-
 	is_valid(New),
 	Neighboor = New.
 
-
+%% Checking if actor gets infected it this cell
 is_infected(Position, Resistent) :-
 	covid1(Covid1),
 	covid2(Covid2),
@@ -79,6 +79,7 @@ is_infected(Position, Resistent) :-
 		false
 	).
 
+%% if stepped on this cell updated resistance
 update_resistence(Position, Resistent, NewResistent) :-
 	mask_position(MaskPosition),
 	doctor_position(DoctorPosition),
