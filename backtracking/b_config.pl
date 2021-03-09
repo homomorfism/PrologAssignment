@@ -2,8 +2,8 @@ field(9).
 start([1,1]).
 end([9,9]).
 
-covid1([6,1]).
-covid2([3,7]).
+covid1([4,2]).
+covid2([2,4]).
 
 
 mask_position([9,5]).

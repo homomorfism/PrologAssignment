@@ -1,4 +1,6 @@
 # PrologAssignment
+# Tags: Innopolis University, Prolog, AI
+
 
 Link to source code: 
 - ```https://github.com/homomorfism/PrologAssignment``` 
@@ -12,9 +14,58 @@ How to run programs:
 
 Description of using algoritms: 
 
-- backtracking: naive implementation of backtracking algorithm without any heuristics, it takes so long to execute, not recommented to use for finding minimum paths. Before stepping of the neighboor field, check if actor is resistent or the field is not infected. 
 
-- dijkstra: I store gamefield as a list of edges(From, To, Cost), each Cost is equals to 1. I traverse through each neighboor point and find the minimum path. Also, I store information about resistance to covid (IsResistent), which is true when the actor was on mask or doctor position.
+- backtracking:
+	* Description: naive implementation of backtracking algorithm without any heuristics. Slow, not optimised algorithm, that is not recommended to use for traversing graphs. 
+
+	* How backtracking works: from each point it chooses some point in the neighboorhood, adds it into visited path variable and then picks another neighboor and then traverse from it. After finding the neighboor checks that after stepping on that field the actor won't become infected. Also, I store variable Resistance that holds information about picking up mask or become vaccinated. 
+
+	* Handling infected & healing cells: information about resistence of covid is stored in a special variable called Resistance and it's value is updated after each step
+
+
+	* Pseudocode:
+		```
+		traverse(From):
+			if actor != home: 
+				pick a Neighboor of actor,
+				make sure that after stepping of this field actor won't become infected,
+				if actor picks an mask and visited doctor -> 
+					update Resistance variable,
+				append Neighboor to visited path variable,
+				traverse(Neighboor).
+			print: Found path
+		```
+
+	* Execution time - extremely long, appr. 7 min on 9 by 9 field.
+
+	* Comments. Due to great difference in execution time 
+
+- dijkstra:
+
+	* Description: this is optimised implementation of backtracting algo. This is fast algorithm, thus is ideally works for finding paths in 2 or 3 D gamefields.
+
+	* How algorithm works: as a global variable (fact) I store a set of all visited paths from initial position to some vertex and min cost, needed to traverse there. 
+	As it is known, dijkstra works only on weighted graphs, so I converted gamefield map into weighed graph, where we can traverse from point to its neighboor. At each step we traverse from point to its neighboor, calculate cost to travel there and if cost is less that cost from all visited paths fact, updates value there.
+
+	* Pseudocode:
+		```
+		traverse(From, CurrentCost):
+			if From != Home:
+				pick a Neighboor of actor,
+				checks that Neighboor is not visited earlier,
+				checks that actor won't became abfor stepping on this field
+				append to the set of paths tuple (Neighboor, CurrentCost+D),
+				if there already exist path containing Neighboor:
+					if Cost < CurrentCost + D:
+						drop tuple (Neighboor, NeighboorCost)
+				traverse(Neighboor, Cost)
+			else:
+				print: "End of algo!"
+		```
+	* Execution time: approx. 250ms. for 9 by 9 field.
+ 	
+ 	* Comments: this is example of good algorithm that efficiently founds the path from initial position to home. This algo is more preferable rather than by using naive backtracking. 
+
 
 
 I tested programs on n=20 examples.
@@ -39,7 +90,7 @@ Statictical analysis:
 		* mean = 0.246
 		* std = 0.007
 
-
+```
 Values: 
 	- back(1): 
 		* [308.6391164489978, 303.7759414999964, 304.4108637889949, 305.6654304889962, 303.2408647819975, 302.49782397099625, 307.9610317600018, 304.4842530850001, 308.9329794200021, 302.45753051799693, 302.7016417959967, 308.123541124005, 304.69595062200096, 304.87818221300404, 309.8800927150005, 306.7053972420035, 304.7569813009977, 306.24044399800187, 307.8055612780008, 303.5160200340033]
@@ -54,12 +105,12 @@ Values:
 	- dijkstra(2): 
 		* [0.300188168999739, 0.29291656099667307, 0.3040465359954396, 0.3060282139995252, 0.30183206099900417, 0.3062014300012379, 0.30958947299950523, 0.3034138470029575, 0.3050194370007375, 0.2948963349990663, 0.30030070900102146, 0.2942259240007843, 0.31114969799818937, 0.29407115199865075, 0.3264785010032938, 0.2986077559980913, 0.2979192009952385, 0.30485626900190255, 0.29925757800083375, 0.31222556099965004]
 
-
+```
 
 Calculating p-values: 
 
 - back(1) vs dijkstra(1)
-	* p_value = $8.52161479432998 * e^{-77}$ <- The most
+	* p_value = $8.52161479432998 * e^{-77}$ <- The most significant p value. 
 
 - back(2) vs dijkstra(2)
 	* p_value = $6.106355350316858 * e^{-40}$
@@ -119,4 +170,10 @@ Environment is:
 Impossible paths: 
 - Map 1 (doc, mask, home is surrounded by covid), tested on both algorithms (execution time on backracting is ~ 12 min.)
 
-![map1](images/map1.jpg)
+![map1](images/map1.jpg){width="200", height="200"}
+
+- Map 2 (actor is surrounded by covid), tested of both algos (execution time < 1s)
+
+![map2](images/map2.jpg){width="200", height="200"}
+
+

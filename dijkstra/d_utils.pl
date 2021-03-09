@@ -50,9 +50,11 @@ update_safe(Position, IsSave, NewIsSave) :-
 	(
 		IsSave = true -> NewIsSave = true;
 
+		(get_neighboor(Position, Covid1, Step); get_neighboor(Position, Covid2, Step)) -> false;
+
 		(Position = Mask; Position = Doc) -> NewIsSave = true;
 
-		(get_neighboor(Position, Covid1, Step); get_neighboor(Position, Covid2, Step)) -> false;
+		
 		NewIsSave = false
 	).
 

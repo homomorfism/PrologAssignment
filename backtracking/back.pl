@@ -12,7 +12,7 @@ back(From, To, VisitedPath, Path, Resistent) :-
 
 	\+ member(X, VisitedPath),
 	update_resistence(X, Resistent, NewResistent),
-	\+ is_infected(X, NewResistent),
+	\+ is_infected(X, Resistent),
 
 	length(VisitedPath, L), L < 11,
 
