@@ -73,7 +73,7 @@ I tested programs on n=20 examples.
 Statictical analysis:
 - backtracting
 	* range = 1
-		* mean = 305.57
+		* mean = 305.570
 		* std = 2.269
 
 - dijkstra:
