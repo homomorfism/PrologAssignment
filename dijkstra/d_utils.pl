@@ -42,19 +42,19 @@ get_neighboor(Point, Neighboor, Step) :-
 update_safe(Position, IsSave, NewIsSave) :-
 	covid1(Covid1),
 	covid2(Covid2),
-	zone(Step),
-
 
 	mask_position(Mask),
 	doctor_position(Doc),
 	(
 		IsSave = true -> NewIsSave = true;
 
-		(get_neighboor(Position, Covid1, Step); get_neighboor(Position, Covid2, Step)) -> false;
+		(
+		    get_neighboor(Position, Covid1, 1);
+		    get_neighboor(Position, Covid2, 1)
+		) -> false;
 
 		(Position = Mask; Position = Doc) -> NewIsSave = true;
 
-		
 		NewIsSave = false
 	).
 

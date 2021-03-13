@@ -70,12 +70,13 @@ get_neighboor(Point, Neighboor, Step) :-
 is_infected(Position, Resistent) :-
 	covid1(Covid1),
 	covid2(Covid2),
-	zone(Step),
-
+	
 	(
 		Resistent -> false;
-		get_neighboor(Covid1, Position, Step) -> true;
-		get_neighboor(Covid2, Position, Step) -> true;
+		(
+		    get_neighboor(Position, Covid1, 1);
+		    get_neighboor(Position, Covid2, 1)
+		) -> true;
 		false
 	).
 
