@@ -1,14 +1,14 @@
 
 
-Description of using algoritms: 
+Description of using algorithms: 
 
 
 - backtracking:
-	* Description: naive implementation of backtracking algorithm without any heuristics. Slow, not optimised algorithm, that is not recommended to use for traversing graphs. 
+	* Description: naive implementation of backtracking algorithm without any heuristics. Slow, not optimised algorithm, that is not recommended using for traversing graphs. 
 
-	* How backtracking works: from each point it chooses some point in the neighboorhood, adds it into visited path variable and then picks another neighboor and then traverse from it. After finding the neighboor checks that after stepping on that field the actor won't become infected. Also, I store variable Resistance that holds information about picking up mask or become vaccinated. 
+	* How backtracking works: from each point it chooses some point in the neighborhood, adds it into visited path variable and then picks another neighbor and then traverse from it. After finding the neighboor checks that after stepping on that field the actor won't become infected. Also, I store variable Resistance that holds information about picking up mask or become vaccinated. 
 
-	* Handling infected & healing cells: information about resistence of covid is stored in a special variable called Resistance and it's value is updated after each step
+	* Handling infected & healing cells: information about resistance of COVID-19 is stored in a special variable called Resistance and it's value is updated after each step
 	
 	* Pseudocode:
 		```
@@ -23,16 +23,16 @@ Description of using algoritms:
 			print: Found path
 		```
 
-	* Execution time - extremely long, appr. 7 min on 9 by 9 field.
+	* Execution time - extremely long, appr. up to 7 min on 9 by 9 field.
 
-	* Comments. Due to great difference in execution time
+	* Comments. Due to great difference in execution time not recommended for usage
 	
 - dijkstra:
 
-	* Description: this is optimised implementation of backtracting algo. This is fast algorithm, thus is ideally works for finding paths in 2 or 3 D gamefields.
+	* Description: this is optimised implementation of backtracking algo. This is fast algorithm, thus is ideally works for finding paths in 2 or 3 D game fields.
 
 	* How algorithm works: as a global variable (fact) I store a set of all visited paths from initial position to some vertex and min cost, needed to traverse there. 
-	As it is known, dijkstra works only on weighted graphs, so I converted gamefield map into weighed graph, where we can traverse from point to its neighboor. At each step we traverse from point to its neighboor, calculate cost to travel there and if cost is less that cost from all visited paths fact, updates value there.
+	As it is known, dijkstra works only on weighted graphs, so I converted game field map into weighed graph, where we can traverse from point to its neighbor. At each step we traverse from point to its neighboor, calculate cost to travel there and if cost is less that cost from all visited paths fact, updates value there.
 
 	* Pseudocode:
 		```
@@ -59,8 +59,8 @@ I tested programs on n=5 examples.
 
 
 
-Statictical analysis:
-- backtracting
+Statistical analysis:
+- backtracking
 	* range = 1
 		* mean = 266.386
 		* std = 99.500
@@ -75,7 +75,7 @@ Testing my program on range = 1 or range = 2 I did not notice the difference:
 	* this algorithm checks all paths that exists on the field and chooses within them the minimum path - so this algo must traverse through each unvisited point and find the minimum path.
 
 - dijkstra:
-	* this algorithm should also traverse through each point to fing the minimum dictance within init posistion and any other point, thus, the algorithm ought to visit any point and check each (minimum) path from init to home position.
+	* this algorithm should also traverse through each point to fling the minimum distance within init position and any other point, thus, the algorithm ought to visit any point and check each (minimum) path from init to home position.
 
 Box plots:
 - backtracking 
@@ -102,7 +102,7 @@ Values:
 Calculating p-values: 
 
 - back(1) vs dijkstra(1)
-	* p_value = $ 0.0007 $ <- The most significant p value, so we could discart null hypothesis that means of execution time 
+	* p_value = 0.0007 <- The most significant p value, so we could discard null hypothesis that means of execution time are the same for both algo.
 is the same.
 
 
@@ -111,15 +111,15 @@ PEAS model of actor:
 - agent type:
 	* actor (player)
 
-- perfomance measure: 
-	* found minimum path from actor to home
+- performance measure: 
+	* found a minimum path from actor to home
 
 - actuators:
 	* making (moves) on the game field
-	* abitily to collect a mask or be vaccinated
+	* ability to collect a mask or be vaccinated
 
 - environment: 
-	* field map with covid, mask and doctor zones
+	* field map with COVID-19, mask and doctor zones
 
 - sensors:
 	* information about current position (relative position to the game field boarders)
@@ -151,11 +151,11 @@ Environment is:
 
 
 Impossible paths: 
-- Map 1 (doc, mask, home is surrounded by covid), tested on both algorithms (execution time on backracting is ~ 12 min.)
+- Map 1 (doc, mask, home is surrounded by COVID-19), tested on both algorithms (execution time on backtracking is ~ 12 min.)
 
 ![map1](images/map1.jpg){width="300", height="300"}
 
-- Map 2 (actor is surrounded by covid), tested of both algos (execution time < 1s)
+- Map 2 (actor is surrounded by COVID-19), tested of both algo (execution time < 1s)
 
 ![map2](images/map2.jpg){width="300", height="300"}
 
